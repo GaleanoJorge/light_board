@@ -12,40 +12,43 @@ class ColorSelector extends StatefulWidget {
 }
 
 class _ColorSelectorState extends State<ColorSelector> {
-  // late Color _selectedValue;
 
   @override
   void initState() {
     super.initState();
-    // _selectedValue = widget.initialValue;
   }
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<Color>(
-      value: widget.initialValue,
-      onChanged: (Color? newValue) {
+    return DropdownButton<String>(
+      value: ca.colorsAvailable.entries.firstWhere(
+        (entry) => entry.value == widget.initialValue,
+        orElse: () => ca.colorsAvailable.entries.first,
+      ).key,
+      onChanged: (String? newValue) {
         if (newValue != null) {
+          widget.initialValue = ca.colorsAvailable[newValue]!;
           setState(() {
-            widget.initialValue = newValue;
           });
-          widget.onChanged(newValue);
+          widget.onChanged(ca.colorsAvailable[newValue]!);
         }
       },
-      items: ca.colorsAvailable.map<DropdownMenuItem<Color>>((value) {
-        return DropdownMenuItem<Color>(
-          value: value,
+      items: ca.colorsAvailable.keys.map<DropdownMenuItem<String>>((key) {
+        return DropdownMenuItem<String>(
+          value: key,
           child: Row(
             children: [
               Container(
                 width: 20,
                 height: 20,
                 decoration: BoxDecoration(
-                  color: value,
+                  color: ca.colorsAvailable[key],
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.grey),
                 ),
               ),
+              SizedBox(width: 8),
+              Text(key),
             ],
           ),
         );

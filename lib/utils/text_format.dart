@@ -13,4 +13,15 @@ extension TextFormatExtension on TextFormat {
         return "LIGHT";
       }
   }
+
+  static TextFormat fromString(String value) {
+    switch (value) {
+      case "NORMAL":
+        return TextFormat.NORMAL;
+      case "LIGHT":
+        return TextFormat.LIGHT;
+      default:
+        return TextFormat.LIGHT; // Valor por defecto
+    }
+  }
 }

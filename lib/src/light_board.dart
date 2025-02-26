@@ -56,7 +56,7 @@ class _LightBoardState extends State<LightBoard> {
   Widget _normalText() {
     return Center(
       child: SizedBox(
-        height: 100, // Altura del letrero
+        height: 200, // Altura del letrero
         child: ListView.builder(
           controller: _con.scrollController,
           scrollDirection: Axis.horizontal,
@@ -66,7 +66,7 @@ class _LightBoardState extends State<LightBoard> {
               width: MediaQuery.of(context).size.width + (_con.model.text.length*35),
               child: Text(
                 _con.model.text,
-                style: TextStyle(color: _con.model.textColor, fontSize: 100),
+                style: TextStyle(color: _con.model.textColor, fontSize: 150),
               ),
             );
           },

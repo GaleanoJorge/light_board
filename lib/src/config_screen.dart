@@ -202,10 +202,10 @@ class ConfigController {
     this.context = context;
     this.refresh = refresh;
 
-    bool hasInfo = await _sharedPref.contains('text');
+    bool hasInfo = await _sharedPref.contains('model');
     if (hasInfo) {
-      textController.text = await _sharedPref.read('text');
-      model.text = textController.text;
+      model = lightBoardModelFromJson(await _sharedPref.read("model"));
+      textController.text = model.text;
     }
 
     // Cargar la lista de textos recientes desde SharedPreferences
@@ -219,15 +219,15 @@ class ConfigController {
       MySnackbar.show(context: context!, text: "Debes escribir un texto");
       return;
     }
-    await _sharedPref.remove("text");
-    await _sharedPref.save("text", textController.text);
     model.text = textController.text;
+    await _sharedPref.save("model", lightBoardModelToJson(model));
 
     // Agregar el texto a la lista de recientes y guardarla
     _addRecentText(textController.text);
     await _saveRecentTexts();
 
     await Navigator.pushNamed(context!, LightBoard.routeName, arguments: model);
+    await _sharedPref.save("model", lightBoardModelToJson(model));
     refresh();
   }
 

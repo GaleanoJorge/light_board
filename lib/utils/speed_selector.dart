@@ -16,8 +16,10 @@ class SpeedSelector extends StatefulWidget {
 }
 
 class _SpeedSelectorState extends State<SpeedSelector> {
+  final double _maxValue = 100;
+  final double _minValue = 10;
   void _incrementSpeed() {
-    if (widget.speed < 100) {
+    if (widget.speed < _maxValue) {
       widget.speed += 1;
       setState(() {});
       widget.onChanged(widget.speed.toInt());
@@ -25,7 +27,7 @@ class _SpeedSelectorState extends State<SpeedSelector> {
   }
 
   void _decrementSpeed() {
-    if (widget.speed > 10) {
+    if (widget.speed > _minValue) {
       widget.speed -= 1;
       setState(() {});
       widget.onChanged(widget.speed.toInt());
@@ -51,9 +53,9 @@ class _SpeedSelectorState extends State<SpeedSelector> {
             Expanded(
               child: Slider(
                 value: widget.speed,
-                min: 10,
-                max: 100,
-                divisions: 40,
+                min: _minValue,
+                max: _maxValue,
+                divisions: ((_maxValue - _minValue)/5).toInt(),
                 label: widget.speed.toInt().toString(),
                 onChanged: (newValue) {
                   widget.speed = newValue;
